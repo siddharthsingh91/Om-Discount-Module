@@ -1,0 +1,132 @@
+/* CSS Document */
+.new-bar-discount ul {
+    padding-left: 0px !important;
+    width: 800px !important;
+    margin: auto;
+    display: flex;
+    padding-bottom:0px !important;
+    text-align: center;
+    background-color: #293133;
+}
+.woocommerce-cart table.cart img, .woocommerce-checkout table.cart img{ width:80px !important;}
+.woocommerce-cart .actions{ display:none;}
+
+.new-bar-discount-two ul{
+        text-align: center;
+        width: 446px !important;
+        margin: auto;
+        display: flex;
+        padding-bottom:0px !important;
+        padding-left: 0px !important;
+}
+.new-bar-discount,.new-bar-discount-two {
+    background-color: #293133;
+    margin-bottom: 20px;
+    display:block;
+}
+
+.new-bar-discount ul,.new-bar-discount-two ul {
+}
+.new-bar-discount li,.new-bar-discount-two li {
+    text-align: center;
+    padding:12px 0px 12px 10px;
+    color: #fff;
+    float: left;
+    list-style: none;
+    /* margin-left:20px; */
+    color: #BCA17A;
+    display:block;
+}
+.new-bar-discount li:last-child,.new-bar-discount-two li:last-child{padding-right:0px;/* text-indent: 40px; */}
+.new-bar-discount li:last-child:after,.new-bar-discount-two li:last-child:after{content:""; color:#fff !important; margin-left:0px;}
+.new-bar-discount li:after,.new-bar-discount-two li:after{ content:"|"; color:#fff !important; margin-left:10px;}
+.new-bar-discount li b,.new-bar-discount-two li b {
+    text-align: center;
+    font-size: 18px !important;
+    font-weight: 600;
+    color: #fff;
+}
+
+.new-bar-discount li span {
+    text-align: center;
+    color: #BCA17A;
+}
+
+.om_add_to_bag {
+    border: 0px !important;
+    color: #fff !important;
+    font-size: 24px;
+    width: 100%;
+    border-radius: 0px !important;
+    text-align: center !important;
+    font-weight: bold !important;
+}
+
+.products .price {
+    color: #BCA17A !important;
+    text-align: center !important;
+    font-size: 20px !important;
+}
+
+.woocommerce-Price-amount,.new-bar-discount li span,.new-bar-discount-two li span{
+    text-align: center;
+    font-size:18px;
+    color: #BCA17A;
+    !important;
+    font-weight: 600;
+}
+.star-rating{display:none !important;}
+.price-per-unit-loop,.woocommerce_de_versandkosten{ display:none !important;}
+.woocommerce-loop-product__title{ height:40px;}
+.addtocartbutton {
+    background-color: #293133;
+    width: 60%;
+    margin: auto;
+    height: 40px;
+    line-height: 40px;
+}
+
+.addtocartbutton span {
+    cursor: pointer;
+    width: 60%;
+    height: 40px;
+    display: block;
+    float: right;
+}
+
+.addtocartbutton input {
+    width: 40%;
+    float: left;
+    border: 1px solid #323330;
+    height: 40px;
+    text-align: center;
+}
+
+#load-message {
+    width: 100%;
+    background-color: #000;
+    height: 1000px !important;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    padding-top: 40px;
+}
+
+#load-message p {
+    width: 380px;
+    margin: auto;
+    color: #000000;
+    background-color: #fff;
+    padding: 10px !important;
+    display: block;
+    font-size: 28px;
+    border-radius: 4px;
+}
+
+.woocommerce-cart-form {
+    /* display: none; */
+}
+
+.cart-collaterals .cross-sells {
+    display: none;
+}
