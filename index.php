@@ -3,7 +3,7 @@
  * Plugin Name: Om Discount Module
  * Plugin URI: http://sanditsolution.com/
  * Description: Redirecting user to thanks page if they have active membership. 
- * Version: 01.00.01
+ * Version: 01.00.04
  * Author: Siddharth Singh
  * Author URI: http://sanditsolution.com/
  * License: A "Slug" license name e.g. GPL2
@@ -20,10 +20,11 @@ function om_register_script_discount() {
 	
 	wp_localize_script( 'om_sidd_jquery', 'add_to_cart', array( "ajaxurl" => admin_url( "admin-ajax.php" ) ) );
 
+if( is_page(array('set','cart-2'))){
 	wp_enqueue_script( 'om_bootstrap_script' );
 	wp_enqueue_style( 'om_bootstrap_style' );
-	wp_enqueue_script( 'om_sidd_jquery' );
-if(is_page(array('set','cart-2','checkout'))){wp_enqueue_style( 'om_sidd_style' );}
+	wp_enqueue_script( 'om_sidd_jquery' ); }
+if(is_page(array('set','cart-2','checkout-2'))){wp_enqueue_style( 'om_sidd_style' );}
 }
 add_action('wp_enqueue_scripts', "om_register_script_discount");
 
@@ -35,7 +36,7 @@ $total_no_count = $woocommerce->cart->cart_contents_count;
 $om_retail_price_curr = $woocommerce->cart->get_cart_total(); 
 $om_retail_price = WC()->cart->cart_contents_total;
 $om_symble = get_woocommerce_currency_symbol();
-$dis = 0;
+$dis = "0%";
 switch ($total_no_count) {
 	case 2:
 	$dis = "7%";	
@@ -58,21 +59,21 @@ switch ($total_no_count) {
 	$om_discount_price = $om_retail_price * .15;
 	break;		
 	default:
-	if($total_no_count > 6){$om_discount_price = $om_retail_price * .15;}else{
+	if($total_no_count > 6){ $dis = "15%"; $om_discount_price = $om_retail_price * .15;}else{
 	   $om_discount_price = 0;}
 }
  WC()->cart->add_fee( 'Discount', -$om_discount_price ); 
 $om_total_price_aft_discount =  $om_retail_price-$om_discount_price;
 ob_start();
 ?>
-<div class="new-bar-discount-two">
+<!-- <div class="new-bar-discount-two">
   <ul>
    <li><b>RETAIL PRICE : </b><span> <?php echo $om_retail_price_curr; ?></span></li>
-   <li><b>YOUR PRICE : </b><span> <?php echo $om_symble.$om_total_price_aft_discount; ?></span></li>
-   <!-- <li><b>Congrats! Your are saving : </b><span> <?php echo $om_symble.$om_discount_price; ?></span></li> -->
+   <li><b>YOUR PRICE : </b><span> <?php echo $om_symble.om_number_display($om_total_price_aft_discount); ?></span></li>
+   <li><b>CONGRATS! YOU ARE SAVING : </b><span> <?php echo $om_symble.om_number_display($om_discount_price); ?></span></li> 
   </ul>
-</div>
-<table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
+</div>-->
+<table class="sidd_table shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
 		<thead>
 			<tr>
 				<th class="product-remove">&nbsp;</th>
@@ -88,7 +89,7 @@ ob_start();
 				<th class="product-thumbnail">&nbsp;</th>
 				<th class="product-name"><?php echo $total_no_count; ?> Product set</th>
 				<th class="product-price"><?php echo $om_retail_price_curr; ?></th>
-				<th class="product-quantity"><?php echo $dis; ?></th>
+				<th class="product-quantity"><?php echo $om_symble.om_number_display($om_discount_price); ?></th>
 				<th class="product-subtotal"><?php echo $om_symble.$om_total_price_aft_discount; ?></th>
         </tr>
 </table>
@@ -96,9 +97,9 @@ ob_start();
 $om_result_value=ob_get_clean();
 
 if(is_page('cart-2') || is_page('checkout')){
-	
 echo $om_result_value; 
-}}
+}
+}
 add_action( 'woocommerce_cart_calculate_fees','om_custom_wc_add_fee' );
 
 
@@ -115,24 +116,30 @@ $total_no_count = $woocommerce->cart->cart_contents_count;
 $om_retail_price_curr = $woocommerce->cart->get_cart_total(); 
 $om_retail_price = WC()->cart->cart_contents_total;
 $om_symble = get_woocommerce_currency_symbol();
+$dis = "0%";
 switch ($total_no_count) {
 	case 2:
+		$dis = "7%";	
 	$om_discount_price = $om_retail_price * .07;
 	break;
 	case 3:
+		$dis = "9%";
 	$om_discount_price = $om_retail_price * .09;
 	break;
 	case 4:
+		$dis = "11%";
 	$om_discount_price = $om_retail_price * .11;
 	break;
 	case 5:
+		$dis = "13%";
 	$om_discount_price = $om_retail_price * .13;
 	break;	
 	case 6:
+		$dis = "15%";
 	$om_discount_price = $om_retail_price * .15;
 	break;		
 	default:
-	if($total_no_count > 6){$om_discount_price = $om_retail_price * .15;}else{
+	if($total_no_count > 6){ $dis = "15%"; $om_discount_price = $om_retail_price * .15;}else{
 	   $om_discount_price = 0;}
 }
 $om_total_price_aft_discount =  $om_retail_price-$om_discount_price;
@@ -140,10 +147,33 @@ $om_total_price_aft_discount =  $om_retail_price-$om_discount_price;
 	$fragments['div.new-bar-discount'] = '<div class="new-bar-discount">
 	<ul>
 	 <li><b>RETAIL PRICE : </b><span>'. $om_retail_price_curr.'</span></li>
-	 <li><b>YOUR PRICE : </b><span>'.$om_symble.$om_total_price_aft_discount.'</span></li>
-	 <li><b>Congrats! Your are saving : </b><span>'.$om_symble.$om_discount_price.'</span></li>
+	 <li><b>YOUR PRICE : </b><span>'.$om_symble.om_number_display($om_total_price_aft_discount).'</span></li>
+	 <li><b>CONGRATS! YOU ARE SAVING : </b><span>'.$om_symble.om_number_display($om_discount_price).'</span></li>
 	</ul>
   </div>';
+
+  $fragments['table.sidd_table'] =  '<table class="sidd_table" cellspacing="0">
+  <thead>
+	  <tr>
+		  <th class="product-remove">&nbsp;</th>
+		  <th class="product-thumbnail">&nbsp;</th>
+		  <th class="product-name">Product</th>
+		  <th class="product-price">Price</th>
+		  <th class="product-quantity">Discount</th>
+		  <th class="product-subtotal">Subtotal</th>
+	  </tr>
+  </thead>
+  <tr class="woocommerce-cart-form__cart-item cart_item">
+  <th class="product-remove">&nbsp;</th>
+		  <th class="product-thumbnail">&nbsp;</th>
+		  <th class="product-name">'. $total_no_count . ' Product set</th>
+		  <th class="product-price">'. $om_retail_price_curr. '</th>
+		  <th class="product-quantity">'.$om_symble.om_number_display($om_discount_price). '</th>
+		  <th class="product-subtotal">'. $om_symble.om_number_display($om_total_price_aft_discount).'</th>
+  </tr>
+</table>';
+
+
     return $fragments;
 }
 
@@ -181,8 +211,8 @@ $om_total_price_aft_discount =  $om_retail_price-$om_discount_price;
 	$om_result = '<div class="new-bar-discount">
 	<ul>
 	 <li><b>RETAIL PRICE : </b><span>'. $om_retail_price_curr.'</span></li>
-	 <li><b>YOUR PRICE : </b><span>'.$om_symble.$om_total_price_aft_discount.'</span></li>
-	 <li><b>Congrats! Your are saving : </b><span>'.$om_symble.$om_discount_price.'</span></li>
+	 <li><b>YOUR PRICE : </b><span>'.$om_symble.om_number_display($om_total_price_aft_discount,2, ',', ' ').'</span></li>
+	 <li><b>CONGRATS! YOU ARE SAVING : </b><span>'.$om_symble.om_number_display($om_discount_price).'</span></li>
 	</ul>
   </div><br/><br/>';
 
@@ -280,8 +310,8 @@ $om_total_price_aft_discount =  $om_retail_price-$om_discount_price;
    
 	$om_result = '<ul>
 	 <li><b>RETAIL PRICE : </b><span>'. $om_retail_price_curr.'</span></li>
-	 <li><b>YOUR PRICE : </b><span>'.$om_symble.$om_total_price_aft_discount.'</span></li>
-	 <li><b>Congrats! Your are saving : </b><span>'.$om_symble.$om_discount_price.'</span></li>
+	 <li><b>YOUR PRICE : </b><span>'.$om_symble.om_number_display($om_total_price_aft_discount).'</span></li>
+	 <li><b>CONGRATS! YOU ARE SAVING : </b><span>'.$om_symble.om_number_display($om_discount_price).'</span></li>
 	</ul>';
 echo $om_result;
 
@@ -305,7 +335,7 @@ return $getProQuant;
  */
 function so_21363268_limit_cart_quantity( $valid, $product_id, $quantity ) {
 
-    $max_allowed = 6;
+    $max_allowed = 100;
     $current_cart_count = WC()->cart->get_cart_contents_count();
 
     if( ( $current_cart_count > $max_allowed || $current_cart_count + $quantity > $max_allowed ) && $valid ){
@@ -316,4 +346,12 @@ function so_21363268_limit_cart_quantity( $valid, $product_id, $quantity ) {
     return $valid;
 
 }
-add_filter( 'woocommerce_add_to_cart_validation', 'so_21363268_limit_cart_quantity', 10, 3 ); ?>
+add_filter( 'woocommerce_add_to_cart_validation', 'so_21363268_limit_cart_quantity', 10, 3 ); 
+
+
+
+
+function om_number_display($price) {
+$price = number_format( $price, 2, ',', '.' ); 
+return $price;
+}?>

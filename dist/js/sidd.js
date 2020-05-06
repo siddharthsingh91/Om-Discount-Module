@@ -5,8 +5,8 @@ jQuery(document).ready(function(e) {
     
       //checkMaxNoCart();
       jQuery("#top-menu").hide();  
-      jQuery("#page-container").css({'visibility':'hidden'}); 
-      jQuery("body").append("<div id=\"load-message\"><p>Wait System Calculating....</p></div>"); 
+    //   jQuery("#page-container").css({'visibility':'hidden'}); 
+    //   jQuery("body").append("<div id=\"load-message\"><p>Wait System Calculating....</p></div>"); 
       var om_pro_pri = jQuery(this).parent().find('input').attr('price');
       var om_pro_id = jQuery(this).parent().find('input').attr('id');
       var om_pro_qunt = jQuery(this).parent().find('input').val();
